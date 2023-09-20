@@ -3,7 +3,7 @@ name = "handlr"
 version = "0.6.4"
 authors = ["Gregory <gregory.mkv@gmail.com>"]
 edition = "2018"
-license = "MIT"
+license = "GPL-3.0 AND MIT"
 description = "Manage mimeapps.list and default applications with ease"
 resolver = "2"
 
