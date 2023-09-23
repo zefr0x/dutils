@@ -22,7 +22,7 @@ pub enum Error {
     Selector(String),
     #[error("selection cancelled")]
     Cancelled,
-    #[error("Please specify the default terminal with handlr set x-scheme-handler/terminal")]
+    #[error("Please specify the default terminal with dutils set x-scheme-handler/terminal")]
     NoTerminal,
     #[error("Bad path: {0}")]
     BadPath(String),

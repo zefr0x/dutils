@@ -40,9 +40,9 @@ impl Config {
                     .map(|e| e.clone())?;
 
                 crate::utils::notify(
-                    "handlr",
+                    "dutils",
                     &format!(
-                        "Guessed terminal emulator: {}.\n\nIf this is wrong, use `handlr set x-scheme-handler/terminal` to update it.",
+                        "Guessed terminal emulator: {}.\n\nIf this is wrong, use `dutils set x-scheme-handler/terminal` to update it.",
                         entry.0.to_string_lossy()
                     )
                 ).ok()?;
@@ -60,7 +60,7 @@ impl Config {
             .ok_or(Error::NoTerminal)
     }
     pub fn load() -> Self {
-        confy::load("handlr").unwrap()
+        confy::load("dutils").unwrap()
     }
 
     pub fn select<O: Iterator<Item = String>>(

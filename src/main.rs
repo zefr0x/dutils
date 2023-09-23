@@ -80,7 +80,7 @@ fn main() -> Result<()> {
             std::process::exit(1);
         }
         (Err(e), false) => {
-            utils::notify("handlr error", &e.to_string())?;
+            utils::notify("dutils error", &e.to_string())?;
             std::process::exit(1);
         }
         _ => Ok(()),

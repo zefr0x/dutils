@@ -1,4 +1,4 @@
-_handlr()
+_dutils()
 {
     local cur prev words cword
     _init_completion || return
@@ -9,20 +9,20 @@ _handlr()
         case ${words[1]} in
             set | add)
                 if ((cword == 2)); then
-                    COMPREPLY=($(compgen -W '$(handlr autocomplete -m)' -- "$cur"))
+                    COMPREPLY=($(compgen -W '$(dutils autocomplete -m)' -- "$cur"))
                 elif ((cword == 3)); then
-                    COMPREPLY=($(compgen -W '$(handlr autocomplete -d | cut -f1)' -- "$cur"))
+                    COMPREPLY=($(compgen -W '$(dutils autocomplete -d | cut -f1)' -- "$cur"))
                 fi
                 ;;
             open)
                 _filedir
                 ;;
             unset | get)
-                COMPREPLY=($(compgen -W '$(handlr autocomplete -m)' -- "$cur"))
+                COMPREPLY=($(compgen -W '$(dutils autocomplete -m)' -- "$cur"))
                 ;;
             launch)
                 if ((cword == 2)); then
-                    COMPREPLY=($(compgen -W '$(handlr autocomplete -m)' -- "$cur"))
+                    COMPREPLY=($(compgen -W '$(dutils autocomplete -m)' -- "$cur"))
                 else
                     _filedir
                 fi
@@ -31,4 +31,4 @@ _handlr()
     fi
 }
 
-complete -F _handlr handlr
+complete -F _dutils dutils

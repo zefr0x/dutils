@@ -1,18 +1,18 @@
-#compdef handlr
+#compdef dutils
 
-_handlr_types() {
+_dutils_types() {
   declare -a types
-  types=(${${(f)"$(handlr autocomplete -m)"}})
+  types=(${${(f)"$(dutils autocomplete -m)"}})
   _describe -t types "types" types
 }
 
-_handlr_desktops() {
+_dutils_desktops() {
   declare -a desktops
-  desktops=(${${(f)"$(handlr autocomplete -d | tr '\t' ':')"}})
+  desktops=(${${(f)"$(dutils autocomplete -d | tr '\t' ':')"}})
   _describe -t desktops "desktops" desktops
 }
 
-_handlr_commands() {
+_dutils_commands() {
   declare -a subcommands
   subcommands=(
       'list:List default apps and the associated handlers'
@@ -23,10 +23,10 @@ _handlr_commands() {
       'get:Get handler for this mime/extension'
       'add:Add a handler for given mime/extension Note that the first handler is the default'
   )
-  _describe -t handlr-commands "command" subcommands
+  _describe -t dutils-commands "command" subcommands
 }
 
-_handlr_subcommand () {
+_dutils_subcommand () {
   case "$words[1]" in
     (list)
       ;;
@@ -34,24 +34,24 @@ _handlr_subcommand () {
       _alternative '1:filename/path:_files'
       ;;
     (get|unset)
-      _arguments ':types:_handlr_types'
+      _arguments ':types:_dutils_types'
       ;;
     (launch)
       _arguments \
-          '1:types:_handlr_types' \
+          '1:types:_dutils_types' \
           '2:filename/path:_files'
       ;;
     (set|add)
       _arguments \
-          '1:type:_handlr_types' \
-          '2:desktop:_handlr_desktops'
+          '1:type:_dutils_types' \
+          '2:desktop:_dutils_desktops'
       ;;
     (*)
       _message 'Unknown subcommand'
   esac
 }
 
-_handlr () {
+_dutils () {
   local curcontext="$curcontext" state line
   typeset -A opt_args
 
@@ -63,13 +63,13 @@ _handlr () {
 
   case $state in
     (command)
-      _handlr_commands
+      _dutils_commands
       ;;
     (arguments)
-      curcontext=${curcontext%:*:*}:handlr-$words[1]:
-      _handlr_subcommand
+      curcontext=${curcontext%:*:*}:dutils-$words[1]:
+      _dutils_subcommand
       ;;
   esac
 }
 
-_handlr "$@"
+_dutils "$@"
