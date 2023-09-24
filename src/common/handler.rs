@@ -2,7 +2,7 @@ use crate::{
     common::{DesktopEntry, ExecMode},
     Error, Result,
 };
-use std::{fmt::Display, convert::TryFrom, ffi::OsString, path::PathBuf, str::FromStr};
+use std::{convert::TryFrom, ffi::OsString, fmt::Display, path::PathBuf, str::FromStr};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Handler(OsString);
@@ -30,8 +30,7 @@ impl Handler {
         xdg::BaseDirectories::new().ok()?.find_data_file(path)
     }
     pub fn resolve(name: OsString) -> Result<Self> {
-        let path = Self::get_path(&name)
-            .ok_or(Error::NotFound(name.to_string_lossy().into()))?;
+        let path = Self::get_path(&name).ok_or(Error::NotFound(name.to_string_lossy().into()))?;
         DesktopEntry::try_from(path)?;
         Ok(Self(name))
     }

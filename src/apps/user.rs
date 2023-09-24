@@ -42,8 +42,7 @@ impl MimeApps {
     pub fn get_handler(&self, mime: &Mime) -> Result<Handler> {
         self.get_handler_from_user(mime)
             .or_else(|_| {
-                let wildcard =
-                    Mime::from_str(&format!("{}/*", mime.type_())).unwrap();
+                let wildcard = Mime::from_str(&format!("{}/*", mime.type_())).unwrap();
                 self.get_handler_from_user(&wildcard)
             })
             .or_else(|_| self.get_handler_from_added_associations(mime))
@@ -58,8 +57,7 @@ impl MimeApps {
                     .collect::<Vec<_>>();
 
                 let handler = {
-                    let name =
-                        CONFIG.select(handlers.iter().map(|h| h.1.clone()))?;
+                    let name = CONFIG.select(handlers.iter().map(|h| h.1.clone()))?;
 
                     handlers
                         .into_iter()
@@ -76,10 +74,7 @@ impl MimeApps {
         }
     }
 
-    fn get_handler_from_added_associations(
-        &self,
-        mime: &Mime,
-    ) -> Result<Handler> {
+    fn get_handler_from_added_associations(&self, mime: &Mime) -> Result<Handler> {
         self.added_associations
             .get(mime)
             .map(|h| h.get(0).unwrap().clone())
@@ -155,10 +150,7 @@ impl MimeApps {
                     };
 
                     if !handlers.is_empty() {
-                        match (
-                            Mime::from_str(name),
-                            current_section_name.as_str(),
-                        ) {
+                        match (Mime::from_str(name), current_section_name.as_str()) {
                             (Ok(mime), "Added Associations") => {
                                 conf.added_associations.insert(mime, handlers)
                             }

@@ -30,14 +30,14 @@ fn main() -> Result<()> {
                 apps.save()?;
             }
             Cmd::Launch { mime, args } => {
-                apps.get_handler(&mime.0)?.launch(args.into_iter().map(|a| a.to_string()).collect())?;
+                apps.get_handler(&mime.0)?
+                    .launch(args.into_iter().map(|a| a.to_string()).collect())?;
             }
             Cmd::Get { mime, json } => {
                 apps.show_handler(&mime.0, json)?;
             }
             Cmd::Open { paths } => {
-                let mut handlers: HashMap<Handler, Vec<String>> =
-                    HashMap::new();
+                let mut handlers: HashMap<Handler, Vec<String>> = HashMap::new();
 
                 for path in paths.into_iter() {
                     handlers

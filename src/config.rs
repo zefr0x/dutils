@@ -63,10 +63,7 @@ impl Config {
         confy::load("dutils", None).unwrap()
     }
 
-    pub fn select<O: Iterator<Item = String>>(
-        &self,
-        mut opts: O,
-    ) -> Result<String> {
+    pub fn select<O: Iterator<Item = String>>(&self, mut opts: O) -> Result<String> {
         use itertools::Itertools;
         use std::{
             io::prelude::*,

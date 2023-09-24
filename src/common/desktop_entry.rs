@@ -28,8 +28,7 @@ pub enum Mode {
 
 impl DesktopEntry {
     pub fn exec(&self, mode: Mode, arguments: Vec<String>) -> Result<()> {
-        let supports_multiple =
-            self.exec.contains("%F") || self.exec.contains("%U");
+        let supports_multiple = self.exec.contains("%F") || self.exec.contains("%U");
         if arguments.is_empty() {
             self.exec_inner(vec![])?
         } else if supports_multiple || mode == Mode::Launch {
@@ -59,8 +58,7 @@ impl DesktopEntry {
         Ok(())
     }
     pub fn get_cmd(&self, args: Vec<String>) -> Result<(String, Vec<String>)> {
-        let special =
-            AhoCorasick::new(&["%f", "%F", "%u", "%U"]).unwrap();
+        let special = AhoCorasick::new(&["%f", "%F", "%u", "%U"]).unwrap();
 
         let mut exec = shlex::split(&self.exec).unwrap();
 
@@ -72,16 +70,11 @@ impl DesktopEntry {
                 .flat_map(|s| match s.as_str() {
                     "%f" | "%F" | "%u" | "%U" => args.clone(),
                     s if special.is_match(s) => vec![{
-                        let mut replaced =
-                            String::with_capacity(s.len() + args.len() * 2);
-                        special.replace_all_with(
-                            s,
-                            &mut replaced,
-                            |_, _, dst| {
-                                dst.push_str(args.clone().join(" ").as_str());
-                                false
-                            },
-                        );
+                        let mut replaced = String::with_capacity(s.len() + args.len() * 2);
+                        special.replace_all_with(s, &mut replaced, |_, _, dst| {
+                            dst.push_str(args.clone().join(" ").as_str());
+                            false
+                        });
                         replaced
                     }],
                     _ => vec![s],

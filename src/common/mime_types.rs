@@ -9,12 +9,8 @@ pub struct MimeType(pub Mime);
 
 impl MimeType {
     fn from_ext(ext: &str) -> Result<Mime> {
-        match &*xdg_mime::SharedMimeInfo::new()
-            .get_mime_types_from_file_name(ext)
-        {
-            [m] if m == &mime::APPLICATION_OCTET_STREAM => {
-                Err(Error::Ambiguous(ext.into()))
-            }
+        match &*xdg_mime::SharedMimeInfo::new().get_mime_types_from_file_name(ext) {
+            [m] if m == &mime::APPLICATION_OCTET_STREAM => Err(Error::Ambiguous(ext.into())),
             [guess, ..] => Ok(guess.clone()),
             [] => unreachable!(),
         }
@@ -79,10 +75,7 @@ mod tests {
     #[test]
     fn user_input() -> Result<()> {
         assert_eq!(MimeOrExtension::from_str(".pdf")?.0, mime::APPLICATION_PDF);
-        assert_eq!(
-            MimeOrExtension::from_str("image/jpeg")?.0,
-            mime::IMAGE_JPEG
-        );
+        assert_eq!(MimeOrExtension::from_str("image/jpeg")?.0, mime::IMAGE_JPEG);
 
         "image//jpg".parse::<MimeOrExtension>().unwrap_err();
         "image".parse::<MimeOrExtension>().unwrap_err();
