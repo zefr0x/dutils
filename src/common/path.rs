@@ -8,6 +8,7 @@ use std::{
     str::FromStr,
 };
 
+#[derive(Clone)]
 pub enum UserPath {
     Url(Url),
     File(PathBuf),

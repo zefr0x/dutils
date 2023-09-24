@@ -60,7 +60,7 @@ impl DesktopEntry {
     }
     pub fn get_cmd(&self, args: Vec<String>) -> Result<(String, Vec<String>)> {
         let special =
-            AhoCorasick::new_auto_configured(&["%f", "%F", "%u", "%U"]);
+            AhoCorasick::new(&["%f", "%F", "%u", "%U"]).unwrap();
 
         let mut exec = shlex::split(&self.exec).unwrap();
 

@@ -60,7 +60,7 @@ impl Config {
             .ok_or(Error::NoTerminal)
     }
     pub fn load() -> Self {
-        confy::load("dutils").unwrap()
+        confy::load("dutils", None).unwrap()
     }
 
     pub fn select<O: Iterator<Item = String>>(

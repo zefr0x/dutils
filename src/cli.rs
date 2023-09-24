@@ -1,9 +1,7 @@
 use crate::common::{Handler, MimeOrExtension, UserPath};
 
-#[derive(clap::Clap)]
-#[clap(global_setting = clap::AppSettings::DeriveDisplayOrder)]
-#[clap(global_setting = clap::AppSettings::DisableHelpSubcommand)]
-#[clap(version = clap::crate_version!())]
+#[derive(clap::Parser)]
+#[command(author, version, about, long_about = None, disable_help_subcommand = true)]
 pub enum Cmd {
     /// List default apps and the associated handlers
     List {
@@ -46,7 +44,7 @@ pub enum Cmd {
         handler: Handler,
     },
 
-    #[clap(setting = clap::AppSettings::Hidden)]
+    #[command(hide = true)]
     Autocomplete {
         #[clap(short)]
         desktop_files: bool,

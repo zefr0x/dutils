@@ -10,7 +10,6 @@ mod error;
 mod utils;
 
 fn main() -> Result<()> {
-    use clap::Clap;
     use cli::Cmd;
     use common::Handler;
     use std::collections::HashMap;
@@ -21,7 +20,7 @@ fn main() -> Result<()> {
     let mut apps = (*apps::APPS).clone();
 
     let res = || -> Result<()> {
-        match Cmd::parse() {
+        match clap::Parser::parse() {
             Cmd::Set { mime, handler } => {
                 apps.set_handler(mime.0, handler);
                 apps.save()?;

@@ -53,7 +53,7 @@ fn mime_to_option(mime: Mime) -> Option<Mime> {
 }
 
 // Mime derived from user input: extension(.pdf) or type like image/jpg
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MimeOrExtension(pub Mime);
 
 impl FromStr for MimeOrExtension {
