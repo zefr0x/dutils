@@ -31,7 +31,7 @@ impl TryFrom<&Path> for MimeType {
     type Error = Error;
     fn try_from(path: &Path) -> Result<Self> {
         let db = xdg_mime::SharedMimeInfo::new();
-        let guess = db.guess_mime_type().path(&path).guess();
+        let guess = db.guess_mime_type().path(path).guess();
 
         let mime = mime_to_option(guess.mime_type().clone())
             .ok_or_else(|| Error::Ambiguous(path.to_owned()))?;
@@ -55,7 +55,7 @@ pub struct MimeOrExtension(pub Mime);
 impl FromStr for MimeOrExtension {
     type Err = Error;
     fn from_str(s: &str) -> Result<Self> {
-        let mime = if s.starts_with(".") {
+        let mime = if s.starts_with('.') {
             MimeType::from_ext(s)?
         } else {
             match Mime::from_str(s)? {

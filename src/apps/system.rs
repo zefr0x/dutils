@@ -24,7 +24,7 @@ impl SystemApps {
         Ok(xdg::BaseDirectories::new()?
             .list_data_files_once("applications")
             .into_iter()
-            .filter(|p| p.extension().map(|x| x.to_str()).flatten() == Some("desktop"))
+            .filter(|p| p.extension().and_then(|x| x.to_str()) == Some("desktop"))
             .filter_map(|p| {
                 Some((
                     p.file_name().unwrap().to_owned(),

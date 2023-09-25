@@ -52,7 +52,7 @@ impl MimeApps {
         match self.default_apps.get(mime) {
             Some(handlers) if CONFIG.enable_selector && handlers.len() > 1 => {
                 let handlers = handlers
-                    .into_iter()
+                    .iter()
                     .map(|h| (h, h.get_entry().unwrap().name))
                     .collect::<Vec<_>>();
 
@@ -117,7 +117,12 @@ impl MimeApps {
                 .read_to_string(&mut buf)?;
             buf
         };
-        let file = Self::parse(Rule::file, &raw_conf)?.next().unwrap();
+        // HACK: `pest` doesn't prevent clippy's result_large_err.
+        // https://rust-lang.github.io/rust-clippy/master/index.html#/result_large_err
+        let file = match Self::parse(Rule::file, &raw_conf) {
+            Ok(mut pairs) => pairs.next().unwrap(),
+            Err(err) => return Err(Error::ParseApps(Box::new(err))),
+        };
 
         let mut current_section_name = "".to_string();
         let mut conf = Self {
@@ -142,7 +147,7 @@ impl MimeApps {
                             .next()
                             .unwrap()
                             .as_str()
-                            .split(";")
+                            .split(';')
                             .filter(|s| !s.is_empty())
                             .unique()
                             .filter_map(|s| Handler::from_str(s).ok())

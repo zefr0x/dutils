@@ -1,7 +1,7 @@
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
     #[error(transparent)]
-    ParseApps(#[from] pest::error::Error<crate::apps::MimeappsRule>),
+    ParseApps(#[from] Box<pest::error::Error<crate::apps::MimeappsRule>>),
     #[error(transparent)]
     Io(#[from] std::io::Error),
     #[error(transparent)]

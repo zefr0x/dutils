@@ -27,8 +27,7 @@ impl Config {
         let terminal_entry = crate::apps::APPS
             .get_handler(&Mime::from_str("x-scheme-handler/terminal").unwrap())
             .ok()
-            .map(|h| h.get_entry().ok())
-            .flatten();
+            .and_then(|h| h.get_entry().ok());
 
         terminal_entry
             .or_else(|| {
@@ -36,8 +35,7 @@ impl Config {
                     .ok()?
                     .find(|(_handler, entry)| {
                         entry.categories.contains_key("TerminalEmulator")
-                    })
-                    .map(|e| e.clone())?;
+                    })?;
 
                 crate::utils::notify(
                     "dutils",
