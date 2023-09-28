@@ -52,13 +52,14 @@ dutils launch x-scheme-handler/https -- https://google.ca
 - Optional json output for scripting
 - Properly supports `Terminal=true` entries
 
-## Setting default terminal 
+## Setting default terminal
 
-Unfortunately, there isn't an XDG spec and thus a standardized way for `dutils` to get your default terminal emulator to run `Terminal=true` desktop entries. There was a proposal floating around a few years ago to use `x-scheme-handler/terminal` for this purpose. It seems to me the least worst option, compared to handling quirks of N+1 distros or using a dutils-specific config option. 
+Unfortunately, there isn't an XDG spec and thus a standardized way for `dutils` to get your default terminal emulator to run `Terminal=true` desktop entries. There was a proposal floating around a few years ago to use `x-scheme-handler/terminal` for this purpose. It seems to me the least worst option, compared to handling quirks of N+1 distros or using a dutils-specific config option.
 
-Now if `x-scheme-handler/terminal` is present, `dutils` will use it. 
+Now if `x-scheme-handler/terminal` is present, `dutils` will use it.
 
 Otherwise, `dutils` will:
+
 1. Find an app with `TerminalEmulator` category
 2. Set it as the default for `x-scheme-handler/terminal`
 3. Send you a notification to let you know it guessed your terminal and provide instructions to change it if necessary
@@ -67,14 +68,15 @@ On the upside, `Terminal=true` entries will now work outside of interactive term
 
 ## Setting multiple handlers
 
-1) Open `~/.config/dutils/dutils.toml` and set `enable_selector = true`. Optionally, you can also tweak the `selector` to your selector command (using e.g. rofi or dmenu).
+1. Open `~/.config/dutils/dutils.toml` and set `enable_selector = true`. Optionally, you can also tweak the `selector` to your selector command (using e.g. rofi or dmenu).
 
-2) Add a second/third/whatever handler using `dutils add`, for example
+2. Add a second/third/whatever handler using `dutils add`, for example
+
 ```
 dutils add x-scheme-handler/https firefox-developer-edition.desktop
 ```
 
-3) When you open a URL, you will be prompted to select the desired application.
+3. When you open a URL, you will be prompted to select the desired application.
 
 ## Installation
 
