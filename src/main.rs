@@ -1,6 +1,7 @@
 use config::CONFIG;
 use error::{Error, Result};
 use once_cell::sync::Lazy;
+use std::io::IsTerminal;
 
 mod apps;
 mod cli;
@@ -70,7 +71,7 @@ fn main() -> Result<()> {
         Ok(())
     }();
 
-    match (res, atty::is(atty::Stream::Stdout)) {
+    match (res, std::io::stdout().is_terminal()) {
         (Err(e), _) if matches!(e, Error::Cancelled) => {
             std::process::exit(1);
         }
