@@ -6,8 +6,6 @@ pub enum Error {
     Io(#[from] std::io::Error),
     #[error(transparent)]
     Xdg(#[from] xdg::BaseDirectoriesError),
-    #[error(transparent)]
-    Config(#[from] confy::ConfyError),
     #[error("no handlers found for '{0}'")]
     NotFound(String),
     #[error("could not figure out the mime type of '{0}'")]

@@ -17,12 +17,24 @@ impl Default for Config {
     fn default() -> Self {
         Config {
             enable_selector: false,
-            selector: "rofi -dmenu -i -p 'Open With: '".into(),
+            selector: "rofi -dmenu -i -p 'Open With: '".to_owned(),
         }
     }
 }
 
 impl Config {
+    pub fn load() -> Self {
+        toml::from_str(&match std::fs::read_to_string(
+            xdg::BaseDirectories::with_prefix("dutils")
+                .unwrap()
+                .get_config_file("config.toml"),
+        ) {
+            Ok(content) => content,
+            Err(_) => String::new(),
+        })
+        .expect("Failed to parse conifg file")
+    }
+
     pub fn terminal() -> Result<String> {
         let terminal_entry = crate::apps::APPS
             .get_handler(&Mime::from_str("x-scheme-handler/terminal").unwrap())
@@ -56,9 +68,6 @@ impl Config {
             })
             .map(|e| e.exec)
             .ok_or(Error::NoTerminal)
-    }
-    pub fn load() -> Self {
-        confy::load("dutils", None).unwrap()
     }
 
     pub fn select<O: Iterator<Item = String>>(&self, mut opts: O) -> Result<String> {
