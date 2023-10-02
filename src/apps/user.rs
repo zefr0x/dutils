@@ -205,29 +205,26 @@ impl MimeApps {
         writer.flush()?;
         Ok(())
     }
-    pub fn print(&self, detailed: bool) -> Result<()> {
+
+    fn write_table(title: &str, contents_map: &HashMap<Mime, VecDeque<Handler>>) {
+        use colored::*;
         use itertools::Itertools;
 
-        let to_rows = |map: &HashMap<Mime, VecDeque<Handler>>| {
-            map.iter()
-                .sorted()
-                .map(|(k, v)| vec![k.to_string(), v.iter().join(", ")])
-                .collect::<Vec<_>>()
-        };
+        println!("{}", title.bold());
 
-        let table = ascii_table::AsciiTable::default();
+        for i in contents_map.iter().sorted() {
+            println!("{} {} {}", i.0, "=>".green(), i.1.iter().join(", "))
+        }
+    }
+
+    pub fn print(&self, detailed: bool) -> Result<()> {
+        Self::write_table("Default Apps", &self.default_apps);
 
         if detailed {
-            println!("Default Apps");
-            table.print(to_rows(&self.default_apps));
             if !self.added_associations.is_empty() {
-                println!("Added Associations");
-                table.print(to_rows(&self.added_associations));
+                Self::write_table("\nAdded Associations", &self.added_associations);
             }
-            println!("System Apps");
-            table.print(to_rows(&self.system_apps.0));
-        } else {
-            table.print(to_rows(&self.default_apps));
+            Self::write_table("\nSystem Apps", &self.system_apps.0)
         }
 
         Ok(())
