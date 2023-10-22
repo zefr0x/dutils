@@ -68,7 +68,7 @@ On the upside, `Terminal=true` entries will now work outside of interactive term
 
 ## Setting multiple handlers
 
-1. Open `~/.config/dutils/dutils.toml` and set `enable_selector = true`. Optionally, you can also tweak the `selector` to your selector command (using e.g. rofi or dmenu).
+1. Open `~/.config/dutils/config.toml` and set `enable_selector = true`. Optionally, you can also tweak the `selector` to your selector command (using e.g. rofi or dmenu).
 
 2. Add a second/third/whatever handler using `dutils add`, for example
 
