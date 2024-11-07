@@ -1,3 +1,6 @@
+> [!Warning]
+> This project is no longer beeing worked on any more. If you are interested, it's free software under the GPL-3.0 license.
+
 <h1 align=center>DUtils</h1>
 
 Manage your default applications with ease using `DUtils`!
